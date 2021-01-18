@@ -55,7 +55,8 @@
 .task--active::after {
   border-width: 1px;
 }
-
+.task--empty-third::after,
+.task--empty-second::after,
 .task--empty::after {
   display: none;
 }
@@ -85,14 +86,16 @@
 .task--dragged::after {
   display: none;
 }
-
+.task--empty-third,
+.task--empty-second,
 .task--empty {
   padding: 15px 19px;
   color: var(--inactive-color);
   border: 1px dashed var(--inactive-color);
   background-color: transparent;
 }
-
+.task--empty-third:hover,
+.task--empty-second:hover,
 .task--empty:hover {
   cursor: default;
 }
