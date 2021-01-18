@@ -33,8 +33,6 @@ localStorage.setItem('todo', JSON.stringify(todoList));
 //   }
 // }
 
-
-
 // document.querySelectorAll('.taskboard__list').addEventListener('click', function(e){
 //   if (e.target.classList.contains('item_${i}'))
 //   alert(e.target.innerText)
@@ -48,7 +46,7 @@ function displayMessages(){
   todoList.forEach(function(item, i){
     
     displayMessage += 
-      `<div class="taskboard__item task">
+      `<div class="taskboard__item task" draggable="true">
         <div class="task__body">
           <p class="task__view" for='item_${i}'>${item.todo}</p>
           <input class="task__input item_${i}" type="text" value="${item.todo}">
@@ -59,4 +57,68 @@ function displayMessages(){
     
   });
 };
+
+
+
+// Перемещение блоков
+
+const list_items = document.querySelectorAll('.taskboard__item');
+const lists = document.querySelectorAll('.taskboard__list');
+const empty = document.querySelector('.task--empty');
+const emptySecond = document.querySelector('.task--empty-second');
+const emptyThird = document.querySelector('.task--empty-third');
+const remove = document.querySelector('.button--clear');
+
+
+
+let draggedItem = null;
+
+for (let i = 0; i < list_items.length; i++) {
+  const item = list_items[i];
+
+  item.addEventListener('dragstart', function(){
+    draggedItem = this;
+    setTimeout (function () {
+      item.style.display = 'none';
+      empty.style.display = 'block';
+      emptySecond.style.display = 'block';
+      emptyThird.style.display = 'block';
+      
+
+    }, 0)
+    
+  });
+
+  item.addEventListener('dragend', function(){
+    setTimeout(function () {
+      draggedItem.style.display = 'flex';
+      draggedItem = null;
+      empty.style.display = ' none';
+      emptySecond.style.display = ' none';
+      emptyThird.style.display = ' none';
+      
+      
+    }, 0); 
+  })
+
+  for (let j = 0; j < lists.length; j ++) {
+    const list = lists[j];
+
+    list.addEventListener('dragover', function(e) {
+      e.preventDefault();
+    });
+
+    list.addEventListener('dragenter', function(e) {
+      e.preventDefault();
+      
+    });
+
+    list.addEventListener('drop', function(e){
+      this.append(draggedItem);
+      
+    });
+  }
+
+
+}
 
